@@ -10,4 +10,4 @@ const connection = new Pool({
     database: 'shortly',
 });
 
-export default connection;
+export {connection};
