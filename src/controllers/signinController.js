@@ -1,18 +1,19 @@
 import {connection} from '../database/db.js';
+import {v4 as uuid} from 'uuid'
 
 async function signin(req, res) {
 
     const {email, password} = req.body
-    const token = "adwkodkow"
-    const time = 11111
-    
+    const token = uuid()
+    const time = Date.now()
+
     try {
 
         const user = await connection.query(`SELECT id FROM users WHERE email=$1;`, [email])
 
         await connection.query(`INSERT INTO tokens ("userId",token,time) VALUES ($1, $2, $3)`, [user.rows[0].id, token, time])
 
-        res.send(user)
+        res.send(token).status(200)
         //res.sendStatus(200)
 
     } catch (error) {
@@ -21,6 +22,7 @@ async function signin(req, res) {
         res.sendStatus(500)
 
     }
+    
 }
 
 async function signinGet(req, res) {

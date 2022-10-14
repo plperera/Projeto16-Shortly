@@ -22,8 +22,6 @@ async function signupMiddleware (req, res, next){
         if (hasUser.rows[0] !== undefined){
             return res.sendStatus(409)
         }
-
-        res.send("deu bom")
         
         next()
         
