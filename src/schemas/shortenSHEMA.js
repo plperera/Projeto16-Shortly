@@ -7,4 +7,8 @@ const shortenSCHEMA = joi.object({
 
 })
 
-export {shortenSCHEMA}
+const findUrlSCHEMA = joi.object({
+    id: joi.number().required()
+})
+
+export {shortenSCHEMA, findUrlSCHEMA}

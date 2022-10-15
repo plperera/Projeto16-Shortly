@@ -1,5 +1,5 @@
 import { connection } from "../database/db.js";
-import {shortenSCHEMA} from "../schemas/shortenSHEMA.js"
+import {shortenSCHEMA, findUrlSCHEMA} from "../schemas/shortenSHEMA.js"
 
 async function shortenMiddleware (req, res, next){
     
@@ -34,4 +34,29 @@ async function shortenMiddleware (req, res, next){
     
     //next()
 }
-export {shortenMiddleware}
+async function getUrlMiddleware (req, res, next){
+    
+    const isValid = findUrlSCHEMA.validate(req.params, {abortEarly: false })
+
+    if (isValid.error){
+        return res.status(422).send(isValid.error.message)
+    }
+
+    const id = req.params.id
+
+    try {
+
+        const hasLinkId = await connection.query(`SELECT * FROM links WHERE id=$1`, [id])
+
+        if (!hasLinkId.rows[0]){
+            res.sendStatus(404)
+        } else {
+            res.send(hasLinkId.rows[0])
+        }
+        
+    } catch (error) {
+        
+    }
+    res.send(id)
+}
+export {shortenMiddleware, getUrlMiddleware}
