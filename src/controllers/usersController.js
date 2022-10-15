@@ -5,14 +5,24 @@ async function users (req, res){
     const token = req.headers.authorization?.replace("Bearer ", "")
 
     try {
-        //SELECT * FROM links WHERE "userId"=13;
-        //pega todos links do usuario
-
-        //SELECT access."linkId" ,COUNT(*) FROM access JOIN links ON links.id = access."linkId" GROUP BY access."linkId";
-        //SELECT access."linkId", links."linkCode" AS "shortUrl", links."linkUrl", COUNT(*) FROM access JOIN links ON links.id = access."linkId" GROUP BY links."linkUrl";
-
+        
         const userToken = await connection.query(`SELECT * FROM tokens WHERE token=$1`, [token])
-        res.send(userToken.rows[0])
+
+        const userInfo = await connection.query(`
+            SELECT users.id, users.name, SUM(links."accessCount") AS "visitCount" 
+                FROM users 
+                    JOIN links ON users.id = links."userId" 
+                        WHERE users.id=$1
+                            GROUP BY users.id
+        `,[userToken.rows[0].userId])
+
+        const linksInfo = await connection.query(`
+            SELECT id, "shortUrl", "linkUrl" AS "url", "accessCount" AS "visitCount" 
+                FROM links 
+                    WHERE "userId"=$1
+        `,[userToken.rows[0].userId])
+
+        res.send({...userInfo.rows[0], shortenedUrls:linksInfo.rows})
 
     } catch (error) {
         console.log(error)

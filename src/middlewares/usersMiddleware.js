@@ -8,6 +8,7 @@ async function usersMiddleware (req, res, next){
     if (!token) {
         res.sendStatus(401)
     }
+    
 
     try {
         const hasAccess = await connection.query("SELECT * FROM tokens WHERE token=$1;",[token])
