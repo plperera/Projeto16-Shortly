@@ -33,7 +33,7 @@ async function usersRanking (req, res){
 
     try {
         const ranking = await connection.query(`
-        SELECT users.id, users.name, SUM(links."accessCount") AS "visitCount", COUNT(links."shortUrl") AS "soma"
+        SELECT users.id, users.name, SUM(links."accessCount") AS "visitCount", COUNT(links."shortUrl") AS "linksCount"
 	        FROM users 
 		        JOIN links ON users.id = links."userId" 
                     GROUP BY users.id 
