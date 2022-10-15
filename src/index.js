@@ -5,6 +5,7 @@ import signupRoute from './routes/signupRoutes.js';
 import signinRoute from './routes/signinRoutes.js';
 import shortenRoute from './routes/shortenRoutes.js';
 import openUrlRoute from './routes/openUrlRoutes.js';
+import usersRoute from './routes/usersRoutes.js';
 
 const server = express()
 server.use(express.json())
@@ -19,6 +20,7 @@ server.use(shortenRoute)
 
 server.use(openUrlRoute)
 
+server.use(usersRoute)
 
 
 
