@@ -29,4 +29,7 @@ async function usersMiddleware (req, res, next){
     //next()
  
 }
-export {usersMiddleware}
+async function usersRankingMiddleware (req, res, next){
+    next()
+}
+export {usersMiddleware, usersRankingMiddleware}

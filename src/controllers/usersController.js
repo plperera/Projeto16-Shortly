@@ -29,5 +29,22 @@ async function users (req, res){
         res.sendStatus(500)
     }
 }
+async function usersRanking (req, res){
 
-export {users}
+    try {
+        const ranking = await connection.query(`
+        SELECT users.id, users.name, SUM(links."accessCount") AS "visitCount", COUNT(links."shortUrl") AS "soma"
+	        FROM users 
+		        JOIN links ON users.id = links."userId" 
+                    GROUP BY users.id 
+                    ORDER BY "visitCount" DESC
+                    LIMIT 10
+        `)
+        res.send(ranking.rows).status(200)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+}
+
+export {users, usersRanking}
