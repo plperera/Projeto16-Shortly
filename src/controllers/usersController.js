@@ -9,7 +9,7 @@ async function users (req, res){
         //pega todos links do usuario
 
         //SELECT access."linkId" ,COUNT(*) FROM access JOIN links ON links.id = access."linkId" GROUP BY access."linkId";
-        //SELECT links."linkUrl", COUNT(*) FROM access JOIN links ON links.id = access."linkId" GROUP BY links."linkUrl";
+        //SELECT access."linkId", links."linkCode" AS "shortUrl", links."linkUrl", COUNT(*) FROM access JOIN links ON links.id = access."linkId" GROUP BY links."linkUrl";
 
         const userToken = await connection.query(`SELECT * FROM tokens WHERE token=$1`, [token])
         res.send(userToken.rows[0])

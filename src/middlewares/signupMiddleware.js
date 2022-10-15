@@ -13,7 +13,7 @@ async function signupMiddleware (req, res, next){
 
     if (password !== confirmPassword){
         return res.send("senhas nao são iguais")
-    }
+    } 
     
     try {
 

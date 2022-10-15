@@ -46,7 +46,7 @@ async function getUrlMiddleware (req, res, next){
 
     try {
 
-        const hasLinkId = await connection.query(`SELECT * FROM links WHERE id=$1`, [id])
+        const hasLinkId = await connection.query(`SELECT id, "shortUrl","linkUrl" AS "url" FROM links WHERE id=$1`, [id])
 
         if (!hasLinkId.rows[0]){
             res.sendStatus(404)
@@ -76,8 +76,8 @@ async function deleteUrlMiddleware (req, res, next){
         }
 
         const hasAccess = await connection.query("SELECT * FROM tokens WHERE token=$1;",[token])
-        
-        if(!hasAccess.rows[0] || hasUrl.rows[0].userId !== hasAccess.rows[0].userId){
+
+        if(!hasAccess.rows[0] || Number(hasUrl.rows[0].userId) !== Number(hasAccess.rows[0].userId)){
             res.sendStatus(401)
         } else {
             

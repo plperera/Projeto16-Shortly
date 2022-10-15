@@ -14,7 +14,7 @@ async function openUrlMiddleware (req, res, next){
     
     try {
         
-        const hasShortUrl = await connection.query(`SELECT * FROM links WHERE "linkCode"=$1;`, [shortUrl])
+        const hasShortUrl = await connection.query(`SELECT * FROM links WHERE "shortUrl"=$1;`, [shortUrl])
 
         if (!hasShortUrl.rows[0]){
             res.send(404)
