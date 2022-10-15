@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid'
 
 async function signin(req, res) {
 
-    const {email, password} = req.body
+    const {email} = req.body
     const token = uuid()
     const time = Date.now()
 

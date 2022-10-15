@@ -27,7 +27,5 @@ async function signinMiddleware (req, res, next){
         console.log(error)
         res.sendStatus(500)
     }
-
-    //next()
 }
 export {signinMiddleware}
