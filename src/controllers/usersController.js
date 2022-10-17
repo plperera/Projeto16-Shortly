@@ -32,7 +32,7 @@ async function users (req, res){
 async function usersRanking (req, res){
 
     try {
-        /*
+        
         const ranking = await connection.query(`
         SELECT users.id, users.name, COUNT(links."shortUrl") AS "linksCount", SUM(links."accessCount") AS "visitCount"
 	        FROM users 
@@ -42,9 +42,7 @@ async function usersRanking (req, res){
                     LIMIT 10
         `)
         res.send(ranking.rows).status(200)
-        */
-       const teste = connection.query("SELECT * FROM users;")
-       res.send(teste)
+
     } catch (error) {
         console.log(error)
         res.sendStatus(500)

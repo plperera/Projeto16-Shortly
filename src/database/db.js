@@ -8,12 +8,12 @@ console.log(process.env.DATABASE_URL)
 const { Pool } = pg;
 
 const databaseConfig = {
-    connectString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
 };
 
-const connection = new Pool (databaseConfig)
+const connection = new Pool(databaseConfig)
 
 export {connection};
