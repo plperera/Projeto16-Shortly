@@ -3,14 +3,17 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
+console.log(process.env.DATABASE_URL)
+
 const { Pool } = pg;
 
-const connection = new Pool({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DATABASE,
-});
+const databaseConfig = {
+    connectString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+};
+
+const connection = new Pool (databaseConfig)
 
 export {connection};
