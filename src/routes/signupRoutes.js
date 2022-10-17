@@ -4,7 +4,7 @@ import { signupMiddleware } from "../middlewares/signupMiddleware.js"
 
 const router = express.Router()
 
-router.get("/signup", signupGet)
+//router.get("/signup", signupGet) rota para testes
 router.post("/signup", signupMiddleware, signup)
 
 

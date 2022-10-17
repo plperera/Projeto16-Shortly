@@ -11,7 +11,7 @@ async function signin(req, res) {
 
         const user = await connection.query(`SELECT id FROM users WHERE email=$1;`, [email])
 
-        await connection.query(`INSERT INTO tokens ("userId",token,"createdDate") VALUES ($1, $2, $3)`, [user.rows[0].id, token, time])
+        await connection.query(`INSERT INTO tokens ("userId",token,"createdDate") VALUES ($1, $2, $3);`, [user.rows[0].id, token, time])
 
         res.send(token).status(200)
         //res.sendStatus(200)
@@ -27,7 +27,7 @@ async function signin(req, res) {
 
 async function signinGet(req, res) {
 
-    const teste = await connection.query('SELECT * FROM tokens')
+    const teste = await connection.query('SELECT * FROM tokens;')
     res.send(teste.rows)
 
 }

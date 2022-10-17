@@ -2,6 +2,10 @@ import { connection } from "../database/db.js";
 
 async function usersMiddleware (req, res, next){
 
+    if (!req.headers.authorization?.includes("Bearer ")) {
+        res.sendStatus(401)
+    }
+
     const token = req.headers.authorization?.replace("Bearer ", "")
     const id = req.params.id
     
@@ -9,7 +13,6 @@ async function usersMiddleware (req, res, next){
         res.sendStatus(401)
     }
     
-
     try {
         const hasAccess = await connection.query("SELECT * FROM tokens WHERE token=$1;",[token])
         

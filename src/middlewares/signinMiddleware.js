@@ -15,7 +15,7 @@ async function signinMiddleware (req, res, next){
 
     try {
 
-        const user = await connection.query(`SELECT * FROM users WHERE email=$1`, [email])
+        const user = await connection.query(`SELECT * FROM users WHERE email=$1;`, [email])
 
         if (user.rows[0] === undefined || !(bcrypt.compareSync(password, user.rows[0].password))){
             return res.sendStatus(401)

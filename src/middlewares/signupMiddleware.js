@@ -12,12 +12,12 @@ async function signupMiddleware (req, res, next){
     const { name, email, password, confirmPassword } = req.body
 
     if (password !== confirmPassword){
-        return res.send("senhas nao são iguais")
+        return res.send("senhas devem ser iguais").status(422)
     } 
     
     try {
 
-        const hasUser = await connection.query(`SELECT * FROM users WHERE email=$1`, [email])
+        const hasUser = await connection.query(`SELECT * FROM users WHERE email=$1;`, [email])
 
         if (hasUser.rows[0] !== undefined){
             return res.sendStatus(409)

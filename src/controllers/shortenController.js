@@ -9,8 +9,8 @@ async function shortenUrl(req, res) {
 
     try {    
 
-        const user = await connection.query(`SELECT "userId" FROM tokens WHERE token=$1`, [token])
-        await connection.query(`INSERT INTO links ("userId", "linkUrl", "shortUrl", "accessCount") VALUES ($1, $2, $3, $4)`, [user.rows[0].userId, url, shortUrl, 0])
+        const user = await connection.query(`SELECT "userId" FROM tokens WHERE token=$1;`, [token])
+        await connection.query(`INSERT INTO links ("userId", "linkUrl", "shortUrl", "accessCount") VALUES ($1, $2, $3, $4);`, [user.rows[0].userId, url, shortUrl, 0])
 
         res.send({"shortUrl":shortUrl}).status(201)
     } catch (error) {
@@ -19,7 +19,6 @@ async function shortenUrl(req, res) {
     }
    
 }
-
 async function shortenUrlGet(req, res) {
 
     const teste = await connection.query('SELECT * FROM tokens;')

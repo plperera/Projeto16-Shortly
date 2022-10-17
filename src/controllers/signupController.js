@@ -22,10 +22,8 @@ async function signup(req, res) {
 }
 
 async function signupGet(req, res) {
-
     const teste = await connection.query('SELECT * FROM users')
     res.send(teste.rows)
-
 }
 
 export {signup, signupGet}

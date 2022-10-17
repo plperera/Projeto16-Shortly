@@ -5,7 +5,7 @@ import { signinMiddleware } from "../middlewares/signinMiddleware.js"
 
 const router = express.Router()
 
-router.get("/signin", signinGet)
+//router.get("/signin", signinGet)
 router.post("/signin", signinMiddleware, signin)
 
 

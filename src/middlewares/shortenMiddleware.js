@@ -8,6 +8,10 @@ async function shortenMiddleware (req, res, next){
     if (isValid.error){
         return res.status(422).send(isValid.error.message)
     }
+    
+    if (!req.headers.authorization?.includes("Bearer ")) {
+        res.sendStatus(401)
+    }
 
     const token = req.headers.authorization?.replace("Bearer ", "")
     
@@ -17,13 +21,14 @@ async function shortenMiddleware (req, res, next){
 
     try {
         
-        const hasAccess = await connection.query("SELECT * FROM tokens WHERE token=$1",[token])
+        const hasAccess = await connection.query("SELECT * FROM tokens WHERE token=$1;",[token])
         
         if(!hasAccess.rows[0]){
             res.sendStatus(401)
         } else {
 
             next()
+            //res.send("tudo certo")
 
         }
 
@@ -46,7 +51,7 @@ async function getUrlMiddleware (req, res, next){
 
     try {
 
-        const hasLinkId = await connection.query(`SELECT id, "shortUrl","linkUrl" AS "url" FROM links WHERE id=$1`, [id])
+        const hasLinkId = await connection.query(`SELECT id, "shortUrl","linkUrl" AS "url" FROM links WHERE id=$1;`, [id])
 
         if (!hasLinkId.rows[0]){
             res.sendStatus(404)
@@ -60,6 +65,10 @@ async function getUrlMiddleware (req, res, next){
     res.send(id)
 }
 async function deleteUrlMiddleware (req, res, next){
+
+    if (!req.headers.authorization?.includes("Bearer ")) {
+        res.sendStatus(401)
+    }
 
     const token = req.headers.authorization?.replace("Bearer ", "")
     const id = req.params.id
